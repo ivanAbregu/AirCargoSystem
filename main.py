@@ -5,6 +5,9 @@ class AirCargoSystem():
         self.clients = []
 
     def register_client(self,client):
+        clt = next((clt for clt in self.clients if clt.id==client.id), None)
+        if clt:
+            raise Exception("Client already register on the system")
         self.clients.append(client)
 
     def do_transport(self, package):
@@ -14,6 +17,9 @@ class Client():
     def __init__(self, name):
         self.name = name
         self.id = uuid4()
+    
+    def __str__(self):
+        return f'{self.name}-{self.id[:5]}'
 
 class Package():
     PENDING = "Pending"
